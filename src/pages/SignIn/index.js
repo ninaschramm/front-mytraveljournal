@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
-
 import useSignIn from '../../hooks/useSignIn';
+import Card from '../../components/Card';
+import Form from '../../components/Form';
+import Link from '../../components/Link';
 
 export default function SignIn() {
 
@@ -51,67 +52,11 @@ export default function SignIn() {
 						disabled = {loadingSignIn}
 						required
 					/>
-					<button type="submit" disabled={loadingSignIn}>Log In</button>
+					<button type="submit" disabled={loadingSignIn}>Login</button>
 				</Form>
+        <Link to="/signup">Não possui login? Inscreva-se</Link>
       </Card>     
     </>
   );
 }
 
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  margin-top: 50px;
-  background-color: #fff;
-  border-color: #fff;
-  border-radius: 15px;
-  color: rgba(0,0,0,.87);
-  width: 390px;
-  height: 520px;
-
-  @media (max-width: 600px) {
-    height: calc(100vh - 80px);
-    padding: 20px;
-  }
-`;
-
-const Form = styled.form`
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-
-    input {
-        height: 55px;
-        padding-left: 15px;
-        width: 95%;
-        border-radius: 15px;
-        border: #FFFFFF;
-        box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 8px 2px;;
-        font-size: 20px;
-        font-family: 'Oswald', sans-serif;
-    }
-
-    .disabled-button{
-        background-color: #263a55;
-        color: #7a7474;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    button{
-        background-color: #bac8ff;
-        color: #FFFFFF;
-        font-family: 'Oswald', sans-serif;
-        font-size: 20px;
-        height: 55px;
-        width: 80%;
-        border-radius: 6px;
-        border: none;
-    }
-`
