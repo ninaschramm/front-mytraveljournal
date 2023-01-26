@@ -15,28 +15,32 @@ import useToken from './hooks/useToken';
 
 import bgimage from './assets/images/bg-image.png';
 import { UserProvider } from './contexts/UserContext';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
-  return (  
-    <Container >
-      <UserProvider>
-        <Router>
-          <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRouteGuard>
-                    <Dashboard />
-                  </ProtectedRouteGuard>
-                }
-              ></Route>
-          </Routes>
-        </Router>
-      </UserProvider>      
-    </Container>      
+  return ( 
+    <>
+      <ToastContainer /> 
+      <Container >
+        <UserProvider>
+          <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRouteGuard>
+                      <Dashboard />
+                    </ProtectedRouteGuard>
+                  }
+                ></Route>
+            </Routes>
+          </Router>
+        </UserProvider>      
+      </Container>    
+    </>  
   );
 }
 
@@ -44,7 +48,7 @@ function ProtectedRouteGuard({ children }) {
   const token = useToken();
 
   if (!token) {
-    return <Navigate to="/sign-in" />;
+    return <Navigate to="/signin" />;
   }
 
   return <>

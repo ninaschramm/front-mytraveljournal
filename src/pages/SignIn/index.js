@@ -1,55 +1,46 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useSignUp from '../../hooks/useSignUp';
+import UserContext from '../../contexts/UserContext';
 
-export default function SignUp() {
+import useSignIn from '../../hooks/useSignIn';
 
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const { loadingSignUp, signUp } = useSignUp();
+export default function SignIn() {
 
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  async function submit(event) {
-    event.preventDefault();
+  const { loadingSignIn, signIn } = useSignIn();
 
-    if (password !== confirmPassword) {
-      alert('As senhas devem ser iguais!');
-    } else {
-      try {
-        await signUp(email, password, username, confirmPassword);
-        toast('Inscrito com sucesso! Por favor, faça login.');
-        navigate('/signin');
-      } catch (error) {
-        toast('Não foi possível fazer o cadastro!');
-      }
+	const {setUserData} = useContext(UserContext);
+
+	async function userLogin(e){
+		e.preventDefault();
+		
+    try {
+      const userData = await signIn(username, password);
+      setUserData(userData);
+      toast('Login realizado com sucesso!');
+      navigate('/dashboard');
+    } catch (err) {
+      toast('Não foi possível fazer o login!');
     }
-  }
+	}
+
   
   return (
     <>
       <Card>
 				<h1>My Travel Journal</h1>
-				<Form onSubmit={submit}>
+				<Form onSubmit={userLogin}>
 					<input
 						type="username"
 						placeholder="username"
 						value={username}
 						onChange={e => setUsername(e.target.value)}
-						disabled = {loadingSignUp}
-						required
-					/>
-          <input
-						type="email"
-						placeholder="email"
-						value={email}
-						onChange={e => setEmail(e.target.value)}
-						disabled = {loadingSignUp}
+						disabled = {loadingSignIn}
 						required
 					/>
 					<input
@@ -57,18 +48,10 @@ export default function SignUp() {
 						placeholder="password"
 						value={password}
 						onChange={e => setPassword(e.target.value)}
-						disabled = {loadingSignUp}
+						disabled = {loadingSignIn}
 						required
 					/>
-          <input
-						type="password"
-						placeholder="confirm your password"
-						value={confirmPassword}
-						onChange={e => setConfirmPassword(e.target.value)}
-						disabled = {loadingSignUp}
-						required
-					/>
-					<button type="submit" disabled={loadingSignUp}>Register</button>
+					<button type="submit" disabled={loadingSignIn}>Log In</button>
 				</Form>
       </Card>     
     </>
