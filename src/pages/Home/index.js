@@ -1,16 +1,10 @@
 import styled from 'styled-components';
+import Card from '../../components/Card';
 
 export default function Home() {
 	return (
-		<Page>
-            My Travel Journal
-		</Page>
+		<Card>
+           <h1>My Travel Journal</h1>
+		</Card>
 	);
 }
-
-const Page = styled.div`
-	min-height: 100vh;
-	width: 100%;
-    display: flex;
-    justify-content: center;
-`;

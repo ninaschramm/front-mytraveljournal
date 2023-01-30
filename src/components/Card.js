@@ -5,7 +5,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-between;
-padding: 62px;
+padding: 62px 0;
 margin-top: 50px;
 background-color: #fff;
 border-color: #fff;
@@ -27,8 +27,7 @@ a {
 }
 
 @media (max-width: 600px) {
-  height: calc(100vh - 80px);
-  padding: 20px;
+  width: 320px;
 }
 `;
 
