@@ -17,4 +17,13 @@ export async function addTravel(token, body) {
       });
       return response.data;
 }
+
+export async function removeTravel(token, tripId) {
+    const response = await api.delete(`/${tripId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }, 
+    });
+        return response.data;
+}
 //

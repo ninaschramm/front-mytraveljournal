@@ -8,11 +8,14 @@ import { useNavigate } from 'react-router-dom';
 import AddButton from '../../components/AddButton';
 import Form from '../../components/Form';
 import useAddTravel from '../../hooks/useAddTravel';
+import { FaTrash } from 'react-icons/fa';
+import useRemoveTravel from '../../hooks/useRemoveTravel';
 
 export default function Dashboard() { 
 
   const { getTravels } = useGetTravels();
   const { addTravel } = useAddTravel();
+  const { removeTravel } = useRemoveTravel();
   const [travelList, setTravelList] = useState([]); 
   const [showModal, setShowModal] = useState(false);
   const [startDate, setStartDate] = useState('');
@@ -39,7 +42,7 @@ export default function Dashboard() {
 
   const handleClick = (target) => {
     const id = target.id;
-    navigate(`/travels/${id}`);
+    navigate(`/dashboard/${id}`);
   };
 
   const handleOpenModal = () => {
@@ -89,6 +92,16 @@ export default function Dashboard() {
     handleCloseModal();
   };
 
+  async function deleteTravel(target) {
+    try {
+      await removeTravel(target.id)
+      setRefresh(!refresh);
+    }
+    catch(err) {
+      toast(err.message)
+    }
+  }
+
   return (
     <> 
     { showModal ?
@@ -123,8 +136,8 @@ export default function Dashboard() {
        <h1>My Travel Journal</h1>  
        <Container>
        {travelList && travelList.map((travel, index) => 
-       <CardBox key={index} id={travel.id} onClick={(e) => handleClick(e.currentTarget)}>
-         {travel.title}
+       <CardBox key={index} id={travel.id} onClick={(e) => handleClick(e.target)}>
+         {travel.title} <FaTrash id={travel.id} onClick={(e) => deleteTravel(e.currentTarget)}/>
        </CardBox>
        )}
        </Container>     
