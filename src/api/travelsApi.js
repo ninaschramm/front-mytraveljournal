@@ -8,4 +8,13 @@ export async function getTravels(token) {
     });
     return response.data;
   }
+
+export async function addTravel(token, body) {
+    const response = await api.post(`/`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+}
 //

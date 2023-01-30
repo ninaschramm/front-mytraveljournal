@@ -7,10 +7,12 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import AddButton from '../../components/AddButton';
 import Form from '../../components/Form';
+import useAddTravel from '../../hooks/useAddTravel';
 
 export default function Dashboard() { 
 
   const { getTravels } = useGetTravels();
+  const { addTravel } = useAddTravel();
   const [travelList, setTravelList] = useState([]); 
   const [showModal, setShowModal] = useState(false);
   const [startDate, setStartDate] = useState('');
@@ -18,6 +20,7 @@ export default function Dashboard() {
   const [title, setTitle] = useState('');
   const [startDateError, setStartDateError] = useState('');
   const [endDateError, setEndDateError] = useState('');
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,13 +33,13 @@ export default function Dashboard() {
     catch(err) {
       toast("Ops, something went wrong")
     }
-  }, []);
+  }, [refresh]);
   
   const navigate = useNavigate();
 
   const handleClick = (target) => {
     const id = target.id;
-    navigate(`/${id}`);
+    navigate(`/travels/${id}`);
   };
 
   const handleOpenModal = () => {
@@ -61,16 +64,28 @@ export default function Dashboard() {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e){
     e.preventDefault();
     if (!validateDates()) {
       toast('The dates should be in format YYYY-MM-DD')
       return;
     }
-    // Perform any actions you need with the form data
+    const data = {
+      title,
+      startDate,
+      endDate
+    }
+    try {
+      await addTravel(data);
+      toast("Travel added")
+    }
+    catch(err) {
+      toast(err.message)
+    }
     setStartDate('');
     setEndDate('');
     setTitle('');
+    setRefresh(!refresh)
     handleCloseModal();
   };
 
