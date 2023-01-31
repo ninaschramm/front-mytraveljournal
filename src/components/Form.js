@@ -37,6 +37,11 @@ const Form = styled.form`
         border-radius: 15px;
         border: none;
     }
+
+    .post-text{
+        height: 270px;
+        align-items: flex-start !important;
+    }
 `
 
 export default Form

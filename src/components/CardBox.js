@@ -6,7 +6,7 @@ const CardBox = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 15px 10px;
-    background-color: ${props => props.reservation ? '#CADDE0': '#EED8DD'};
+    background-color: ${props => props.id ? '#CADDE0': '#EED8DD'};
     border-color: #fff;
     border-radius: 15px;
     font-family: Montserrat;

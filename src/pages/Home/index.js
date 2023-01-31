@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from '../../components/Card';
 import CardBox from '../../components/CardBox';
 import useGetTravelById from '../../hooks/useGetTravelById';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
+import { FaBackward } from 'react-icons/fa';
 
 export default function Home() {
 
@@ -14,6 +15,8 @@ export default function Home() {
 	const [endDate, setEndDate] = useState(null);
 	const { getTravelById } = useGetTravelById();
 	const { tripId } = useParams();
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -30,6 +33,19 @@ export default function Home() {
 		  }
 	}, [])
 
+	const handleClick = (target) => {
+		if (target.id === "0") {
+			navigate(`journal`);
+		}
+		else if (target.id === "1") {
+			navigate(`/reservations/${tripId}`);
+		}
+		else {
+			toast("Ops, something went wrong here")
+			navigate(`/dashboard`)
+		}
+	  };
+
 	return (
 		<Card>
 			{ travelInfo ? 
@@ -38,8 +54,9 @@ export default function Home() {
 				<h2>{travelInfo.title}</h2>				
 				{startDate} - {endDate}
 				<Container>
-					<CardBox reservation={false}>My Journal</CardBox>
-					<CardBox reservation={true}>My Reservations</CardBox>
+					<CardBox id={0} onClick={(e) => handleClick(e.currentTarget)}>My Journal</CardBox>
+					<CardBox id={1} onClick={(e) => handleClick(e.currentTarget)}>My Reservations</CardBox>
+					<Link to='/dashboard'>< FaBackward /> Voltar</Link>
 				</Container>  
 			</>			
 			  :
@@ -56,4 +73,9 @@ const Container = styled.div`
   padding-bottom: 30px;
   overflow-y: auto;
   max-height: 250px;
+
+  a {
+	font-size: 16px;
+	margin-top: 10px;
+  }
 `;

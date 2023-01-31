@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
+import Journal from './pages/Journal';
 import styled from 'styled-components';
 
 import useToken from './hooks/useToken';
@@ -87,10 +88,10 @@ function App() {
                   }
               ></Route>
               <Route
-                  path="/dashboard/:tripId/reservations"
+                  path="/dashboard/:tripId/journal"
                   element={
                     <ProtectedRouteGuard>
-                      <Dashboard />
+                      <Journal />
                     </ProtectedRouteGuard>
                   }
               ></Route>

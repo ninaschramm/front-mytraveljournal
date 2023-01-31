@@ -12,7 +12,7 @@ border-color: #fff;
 border-radius: 15px;
 color: rgba(0,0,0,.87);
 width: 390px;
-height: 520px;
+height: 620px;
 
 h1 {
   font-family: Lobster;
@@ -23,9 +23,9 @@ h1 {
 }
 
 h2 {
-  font-size: 35px;
+  font-size: 26px;
   font-weight: bold;
-  color: #ffa8a8;
+  color: #CADDE0;
 }
 
 a {
