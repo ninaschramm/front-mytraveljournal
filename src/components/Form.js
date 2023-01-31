@@ -6,7 +6,7 @@ const Form = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 32px 0;
+    margin-bottom: 100px;
     gap: 14px;
     font-family: Montserrat;
 
@@ -16,6 +16,17 @@ const Form = styled.form`
         width: 95%;
         border-radius: 15px;
         border: #FFFFFF;
+        box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 8px 2px;;
+        font-size: 16px;
+    }
+
+    select {
+        height: 45px;
+        padding-left: 15px;
+        width: 95%;
+        border-radius: 15px;
+        border: #FFFFFF;
+        background-color: #FFFFFF;
         box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 8px 2px;;
         font-size: 16px;
     }
@@ -39,7 +50,7 @@ const Form = styled.form`
     }
 
     .post-text{
-        height: 270px;
+        height: 200px;
         align-items: flex-start !important;
     }
 `

@@ -2,21 +2,21 @@ import useAsync from './useAsync';
 import useToken from './useToken';
 import * as reservationsApi from '../api/reservationsApi';
 
-export default function useRemoveReservation() {
+export default function useAddReservation() {
   const token = useToken();
 
   const {
     data: reservations,
     loading: reservationsLoading,
     error: reservationsError,
-    act: removeReservation,
-  } = useAsync((tripId, reservationId) => reservationsApi.removeReservation(token, tripId, reservationId));
+    act: addReservation,
+  } = useAsync((tripId, body) => reservationsApi.addReservation(token, tripId, body));
 
   return {
     reservations,
     reservationsLoading,
     reservationsError,
-    removeReservation
+    addReservation
   };
 }
 //

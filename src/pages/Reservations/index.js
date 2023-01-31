@@ -10,20 +10,26 @@ import Form from '../../components/Form';
 import { FaTrash, FaBackward } from 'react-icons/fa';
 import useGetReservations from '../../hooks/useGetReservations';
 import useRemoveReservation from '../../hooks/useRemoveReservation';
+import useAddReservation from '../../hooks/useAddReservation';
+import * as Select from '@radix-ui/react-select';
+
 
 export default function Reservations() {
 
 	const { getReservations } = useGetReservations();
     const { getTravelById } = useGetTravelById();
     const { removeReservation } = useRemoveReservation();
+    const { addReservation } = useAddReservation();
 	const { tripId } = useParams();
     const [reservationsList, setReservationsList] = useState(null);
     const [travelInfo, setTravelInfo] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [image, setImage] = useState('');
-    const [text, setText] = useState('');
+    const [code, setCode] = useState('');
+    const [title, setTitle] = useState('');
+    const [type, setType] = useState('');
     const [refresh, setRefresh] = useState(false);
     const navigate = useNavigate();
+    const [selectedReservationType, setSelectedReservationType] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,25 +52,27 @@ export default function Reservations() {
 
     const handleCloseModal = () => {
     setShowModal(false);
-    setImage('');
-    setText('');
+    setCode('');
+    setTitle('');
     };      
 
     async function handleSubmit(e){
     e.preventDefault();
         
         const data = {
-          image,
-          text
+          code,
+          title,
+          type: selectedReservationType
         }
+        console.log(data)
 
-        // try {
-        //   await addPost(tripId, data);
-        //   toast("Post added")
-        // }
-        // catch(err) {
-        //   toast(err.message)
-        // }
+        try {
+          await addReservation(tripId, data);
+          toast("Reservation added")
+        }
+        catch(err) {
+          toast(err.message)
+        }
         setRefresh(!refresh)
         handleCloseModal();
       };
@@ -84,24 +92,34 @@ export default function Reservations() {
     const goBack = () => {
 		navigate(-1);
 	}
+      
+    const handleReservationTypeChange = (event) => {
+        setSelectedReservationType(event.target.value);
+    };
 
 	return (        
 		<Card>  
               { showModal ?      
                 <>
-                <h1>New post:</h1>
+                <h1>New reservation:</h1>
                 <Form onSubmit={handleSubmit}>
                     <input
                         type="text"
-                        className='post-text'
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        placeholder="Text" />
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Title" />
                     <input
                         type="text"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
-                        placeholder="image url" />
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                        placeholder="Reservation Code" />
+                    <select required value={selectedReservationType} onChange={handleReservationTypeChange}>
+                        <option value="" disabled selected>Select The Type of Reservation</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Ticket">Ticket</option>
+                        <option value="Other">Other</option>
+                    </select>
                     <button type="submit">Submit</button>
                     <button onClick={handleCloseModal}>Close</button>
                 </Form></>
@@ -140,4 +158,4 @@ const Container = styled.div`
   align-items: center;
   overflow-y: auto;
   height: 330px;
-`;
+`
