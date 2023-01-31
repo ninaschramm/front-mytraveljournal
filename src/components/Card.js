@@ -32,8 +32,8 @@ a {
   font-size: 14px;
 }
 
-@media (max-width: 600px) {
-  width: 320px;
+@media (max-width: 380px) {
+  width: 350px;
 }
 `;
 

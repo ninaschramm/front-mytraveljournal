@@ -67,7 +67,7 @@ export default function Home() {
 }
 
 const Container = styled.div`
-  width: 320px;
+  max-width: 320px;
   gap: 20px;
   display: flex;
   flex-direction: column;

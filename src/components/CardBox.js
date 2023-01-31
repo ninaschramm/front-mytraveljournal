@@ -17,7 +17,7 @@ const CardBox = styled.div`
     cursor: pointer;
 
     @media (max-width: 600px) {
-        width: 300px;
+        width: 270px;
     }
 `;
 
