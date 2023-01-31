@@ -5,21 +5,17 @@ import Card from '../../components/Card';
 import PostCard from '../../components/PostCard';
 import useGetTravelById from '../../hooks/useGetTravelById';
 import { toast } from 'react-toastify';
-import useGetPosts from '../../hooks/useGetPosts';
 import AddButton from '../../components/AddButton';
-import useAddPost from '../../hooks/useAddPost';
-import useRemovePost from '../../hooks/useRemovePost';
 import Form from '../../components/Form';
 import { FaTrash, FaBackward } from 'react-icons/fa';
+import useGetReservations from '../../hooks/useGetReservations';
 
-export default function Journal() {
+export default function Reservations() {
 
-	const { getPosts } = useGetPosts();
+	const { getReservations } = useGetReservations();
     const { getTravelById } = useGetTravelById();
-    const { addPost } = useAddPost();
-    const { removePost } = useRemovePost();
 	const { tripId } = useParams();
-    const [postsList, setPostList] = useState(null);
+    const [reservationsList, setReservationsList] = useState(null);
     const [travelInfo, setTravelInfo] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [image, setImage] = useState('');
@@ -29,8 +25,8 @@ export default function Journal() {
 
     useEffect(() => {
         const fetchData = async () => {
-          const posts = await getPosts(tripId);    
-          setPostList(posts);
+          const reservations = await getReservations(tripId);    
+          setReservationsList(reservations);
           const travel = await getTravelById(tripId);    
 		setTravelInfo(travel);
         }
@@ -60,13 +56,13 @@ export default function Journal() {
           text
         }
 
-        try {
-          await addPost(tripId, data);
-          toast("Post added")
-        }
-        catch(err) {
-          toast(err.message)
-        }
+        // try {
+        //   await addPost(tripId, data);
+        //   toast("Post added")
+        // }
+        // catch(err) {
+        //   toast(err.message)
+        // }
         setRefresh(!refresh)
         handleCloseModal();
       };
@@ -74,13 +70,13 @@ export default function Journal() {
     async function deletePost(target){
         const postId = target.id;        
 
-        try {
-            await removePost(tripId, postId)
-            setRefresh(!refresh);
-          }
-          catch(err) {
-            toast(err.message)
-          }
+        // try {
+        //     await removePost(tripId, postId)
+        //     setRefresh(!refresh);
+        //   }
+        //   catch(err) {
+        //     toast(err.message)
+        //   }
     }
 
     const goBack = () => {
@@ -113,13 +109,14 @@ export default function Journal() {
                     <h1>My Travel Journal</h1>  
                     <h2>{travelInfo.title}</h2>		
                     <Container>
-                        {postsList && postsList.map((post, index) => 
-                            <PostCard key={index} id={post.id}>
+                        {reservationsList && reservationsList.map((reservation, index) => 
+                            <PostCard key={index} id={reservation.id}>
                                 <div className='icon'>
-                                    <FaTrash id={post.id} onClick={(e) => deletePost(e.currentTarget)}/>
+                                    <FaTrash id={reservation.id} onClick={(e) => deletePost(e.currentTarget)}/>
                                 </div>
-                                <img src={post.image} alt="" />
-                                <p>{post.text}</p>
+                                <p>{reservation.code}</p>
+                                <h3>{reservation.title}</h3>
+                                <p>type: {reservation.type}</p>
                             </PostCard>
                         )}
                     </Container>
@@ -141,8 +138,4 @@ const Container = styled.div`
   align-items: center;
   overflow-y: auto;
   height: 330px;
-
-  div {
-  font-size: 16px !important;
-  }
 `;

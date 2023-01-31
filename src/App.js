@@ -12,6 +12,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Journal from './pages/Journal';
+import Reservations from './pages/Reservations'; 
 import styled from 'styled-components';
 
 import useToken from './hooks/useToken';
@@ -92,6 +93,14 @@ function App() {
                   element={
                     <ProtectedRouteGuard>
                       <Journal />
+                    </ProtectedRouteGuard>
+                  }
+              ></Route>
+               <Route
+                  path="/dashboard/:tripId/reservations"
+                  element={
+                    <ProtectedRouteGuard>
+                      <Reservations />
                     </ProtectedRouteGuard>
                   }
               ></Route>

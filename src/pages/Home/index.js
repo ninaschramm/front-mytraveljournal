@@ -38,7 +38,7 @@ export default function Home() {
 			navigate(`journal`);
 		}
 		else if (target.id === "1") {
-			navigate(`/reservations/${tripId}`);
+			navigate(`reservations`);
 		}
 		else {
 			toast("Ops, something went wrong here")
@@ -51,13 +51,14 @@ export default function Home() {
 			{ travelInfo ? 
 			<>
 				<h1>My Travel Journal</h1>  
-				<h2>{travelInfo.title}</h2>				
-				{startDate} - {endDate}
+				<div><h2>{travelInfo.title}</h2>	
+  				{'\n'}	
+				{startDate} - {endDate}</div>
 				<Container>
 					<CardBox id={0} onClick={(e) => handleClick(e.currentTarget)}>My Journal</CardBox>
 					<CardBox id={1} onClick={(e) => handleClick(e.currentTarget)}>My Reservations</CardBox>
-					<Link to='/dashboard'>< FaBackward /> Voltar</Link>
 				</Container>  
+				<Link to='/dashboard'>< FaBackward /> Voltar</Link>
 			</>			
 			  :
 			"Ops, parece que você tentou acessar um endereço errado."      }
@@ -72,7 +73,7 @@ const Container = styled.div`
   flex-direction: column;
   padding-bottom: 30px;
   overflow-y: auto;
-  max-height: 250px;
+  height: 250px;
 
   a {
 	font-size: 16px;

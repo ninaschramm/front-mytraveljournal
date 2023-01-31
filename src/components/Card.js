@@ -5,7 +5,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-between;
-padding: 62px 0;
+padding: 45px 0;
 margin-top: 50px;
 background-color: #fff;
 border-color: #fff;
