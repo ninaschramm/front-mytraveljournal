@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import useGetPosts from '../../hooks/useGetPosts';
 import AddButton from '../../components/AddButton';
 import useAddPost from '../../hooks/useAddPost';
+import useRemovePost from '../../hooks/useRemovePost';
 import Form from '../../components/Form';
 import { FaTrash } from 'react-icons/fa';
 
@@ -16,6 +17,7 @@ export default function Journal() {
 	const { getPosts } = useGetPosts();
     const { getTravelById } = useGetTravelById();
     const { addPost } = useAddPost();
+    const { removePost } = useRemovePost();
 	const { tripId } = useParams();
     const [postsList, setPostList] = useState(null);
     const [travelInfo, setTravelInfo] = useState(null);
@@ -23,8 +25,6 @@ export default function Journal() {
     const [image, setImage] = useState('');
     const [text, setText] = useState('');
     const [refresh, setRefresh] = useState(false);
-
-	const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,18 +41,18 @@ export default function Journal() {
         }
       }, [refresh]);
 
-      const handleOpenModal = () => {
-        setShowModal(true);
-      };
-    
-      const handleCloseModal = () => {
-        setShowModal(false);
-        setImage('');
-        setText('');
-      };      
-    
-      async function handleSubmit(e){
-        e.preventDefault();
+    const handleOpenModal = () => {
+    setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+    setShowModal(false);
+    setImage('');
+    setText('');
+    };      
+
+    async function handleSubmit(e){
+    e.preventDefault();
         
         const data = {
           image,
@@ -70,18 +70,18 @@ export default function Journal() {
         handleCloseModal();
       };
 
-	// const handleClick = (target) => {
-	// 	if (target.id === "0") {
-	// 		navigate(`journal`);
-	// 	}
-	// 	else if (target.id === "1") {
-	// 		navigate(`/reservations/${tripId}`);
-	// 	}
-	// 	else {
-	// 		toast("Ops, something went wrong here")
-	// 		navigate(`/dashboard`)
-	// 	}
-	//   };
+    async function deletePost(target){
+        const postId = target.id;        
+
+        try {
+            await removePost(tripId, postId)
+            setRefresh(!refresh);
+          }
+          catch(err) {
+            toast(err.message)
+          }
+    }
+
 
 	return (        
 		<Card>  
@@ -112,7 +112,7 @@ export default function Journal() {
                         {postsList && postsList.map((post, index) => 
                             <PostCard key={index} id={post.id}>
                                 <div className='icon'>
-                                    <FaTrash />
+                                    <FaTrash id={post.id} onClick={(e) => deletePost(e.currentTarget)}/>
                                 </div>
                                 <img src={post.image} alt="" />
                                 <p>{post.text}</p>
