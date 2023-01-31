@@ -15,7 +15,7 @@ export async function addTravel(token, body) {
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data;
+    return response.data;
 }
 
 export async function removeTravel(token, tripId) {
@@ -24,6 +24,15 @@ export async function removeTravel(token, tripId) {
           Authorization: `Bearer ${token}`,
         }, 
     });
-        return response.data;
+    return response.data;
+}
+
+export async function getTravelById(token, tripId){
+    const response = await api.get(`/${tripId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
 }
 //

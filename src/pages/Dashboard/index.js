@@ -149,19 +149,6 @@ export default function Dashboard() {
   );
 }
 
-
-{/* <Card>
-<h1>My Travel Journal</h1>  
-<Container>
-<Link to="/signin">
-  <CardBox reservation={false}>My Journal</CardBox>
-</Link>    
-<Link to="/signin">
-  <CardBox reservation={true}>My Reservations</CardBox>
-</Link>          
-</Container>          
-</Card>      */}
-
 const Container = styled.div`
   width: 320px;
   gap: 20px;

@@ -22,6 +22,12 @@ h1 {
   text-shadow: 1px 1px 2px rgba(230, 73, 128, 0.3);
 }
 
+h2 {
+  font-size: 35px;
+  font-weight: bold;
+  color: #ffa8a8;
+}
+
 a {
   font-size: 14px;
 }

@@ -78,6 +78,22 @@ function App() {
                     </ProtectedRouteGuard>
                   }
               ></Route>
+              <Route
+                  path="/dashboard/:tripId"
+                  element={
+                    <ProtectedRouteGuard>
+                      <Home />
+                    </ProtectedRouteGuard>
+                  }
+              ></Route>
+              <Route
+                  path="/dashboard/:tripId/reservations"
+                  element={
+                    <ProtectedRouteGuard>
+                      <Dashboard />
+                    </ProtectedRouteGuard>
+                  }
+              ></Route>
             </Routes>
           </Router>
         </UserProvider>      
