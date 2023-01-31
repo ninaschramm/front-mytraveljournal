@@ -9,11 +9,13 @@ import AddButton from '../../components/AddButton';
 import Form from '../../components/Form';
 import { FaTrash, FaBackward } from 'react-icons/fa';
 import useGetReservations from '../../hooks/useGetReservations';
+import useRemoveReservation from '../../hooks/useRemoveReservation';
 
 export default function Reservations() {
 
 	const { getReservations } = useGetReservations();
     const { getTravelById } = useGetTravelById();
+    const { removeReservation } = useRemoveReservation();
 	const { tripId } = useParams();
     const [reservationsList, setReservationsList] = useState(null);
     const [travelInfo, setTravelInfo] = useState(null);
@@ -67,16 +69,16 @@ export default function Reservations() {
         handleCloseModal();
       };
 
-    async function deletePost(target){
-        const postId = target.id;        
+    async function deleteReservation(target){
+        const reservationId = target.id;        
 
-        // try {
-        //     await removePost(tripId, postId)
-        //     setRefresh(!refresh);
-        //   }
-        //   catch(err) {
-        //     toast(err.message)
-        //   }
+        try {
+            await removeReservation(tripId, reservationId)
+            setRefresh(!refresh);
+          }
+          catch(err) {
+            toast(err.message)
+          }
     }
 
     const goBack = () => {
@@ -112,7 +114,7 @@ export default function Reservations() {
                         {reservationsList && reservationsList.map((reservation, index) => 
                             <PostCard key={index} id={reservation.id}>
                                 <div className='icon'>
-                                    <FaTrash id={reservation.id} onClick={(e) => deletePost(e.currentTarget)}/>
+                                    <FaTrash id={reservation.id} onClick={(e) => deleteReservation(e.currentTarget)}/>
                                 </div>
                                 <p>{reservation.code}</p>
                                 <h3>{reservation.title}</h3>
@@ -120,7 +122,7 @@ export default function Reservations() {
                             </PostCard>
                         )}
                     </Container>
-                    <AddButton onClick={handleOpenModal}>New Post</AddButton>
+                    <AddButton onClick={handleOpenModal}>Add Reservation</AddButton>
                     <div onClick={goBack}>
                     < FaBackward /> Voltar
                     </div>

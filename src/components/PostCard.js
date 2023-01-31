@@ -13,7 +13,6 @@ const PostCard = styled.div`
   box-shadow: rgba(99, 99, 99, 0.2) 2px 2px 8px 2px;
   border-radius: 10px;
   background-color: #FFF;
-  margin-right: 20px;
   margin-bottom: 10px;
   position: relative;
 
